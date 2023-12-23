@@ -5,6 +5,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    systems.url = "github:nix-systems/default";
     flake-utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
@@ -28,7 +29,9 @@
   in
     {
       nixosModules.agenixRekey = import ./modules/agenix-rekey.nix nixpkgs;
-      nixosModules.default = self.nixosModules.agenixRekey;
+      nixosModules.default = self.darwinModules.agenixRekey;
+      darwinModules.agenixRekey = import ./modules/agenix-rekey.nix nixpkgs;
+      darwinModules.default = self.darwinModules.agenixRekey;
 
       # A nixpkgs overlay that adds the agenix CLI wrapper
       overlays.default = self.overlays.agenix-rekey;

@@ -1,4 +1,4 @@
-{ pkgs, ... } @ inputs: let
+{pkgs, ...} @ inputs: let
   inherit
     (pkgs.lib)
     concatStringsSep
@@ -76,9 +76,9 @@ in
     case "''${#POSITIONAL_ARGS[@]}" in
       0)
         ${optionalString (builtins.length validRelativeSecretPaths == 0) ''
-        die "No relevant secret definitions were found for any host. Pass a filename to create a new secret regardless of whether it is already used."
-        break
-        ''}
+      die "No relevant secret definitions were found for any host. Pass a filename to create a new secret regardless of whether it is already used."
+      break
+    ''}
         FILE=$(echo ${escapeShellArg (concatStringsSep "\n" validRelativeSecretPaths)} \
           | ${pkgs.fzf}/bin/fzf --tiebreak=end --bind=tab:down,btab:up,change:top --height='~50%' --tac --cycle --layout=reverse) \
           || die "No file selected. Aborting."
